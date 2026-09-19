@@ -540,6 +540,106 @@
     border: 1px solid var(--border);
   }
 
+  /* ── Events ── */
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 8px;
+  }
+
+  .event-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 28px;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    align-items: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .event-item:hover {
+    border-color: var(--border2);
+    box-shadow: 0 0 28px rgba(0,0,0,0.4), inset 0 1px 0 rgba(200,23,42,0.08);
+  }
+
+  .event-date {
+    font-family: var(--bebas);
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: var(--primary);
+    line-height: 1.3;
+    border-right: 1px solid var(--border);
+    padding-right: 24px;
+  }
+
+  .event-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .event-location {
+    font-family: var(--barlow);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--subtext);
+    margin-bottom: 3px;
+  }
+
+  .event-with {
+    font-family: var(--barlow);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--dim);
+  }
+
+  @media (max-width: 640px) {
+    .event-item { grid-template-columns: 1fr; gap: 8px; }
+    .event-date { border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; padding-bottom: 10px; }
+  }
+
+  /* ── Project link + anthology ── */
+  .project-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+
+  .project-link:hover { opacity: 0.8; }
+  .project-link:hover .project-title { color: var(--primaryLight); }
+
+  .project-anthology {
+    font-family: var(--barlow);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--primary);
+    border: 1px solid rgba(200,23,42,0.3);
+    border-radius: 2px;
+    padding: 1px 6px;
+    margin-left: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .project-note {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--dim);
+    margin-top: 4px;
+  }
+
   /* ── Tone ── */
   .tone-grid {
     display: grid;
@@ -870,8 +970,8 @@
     <li><a href="#bio">Bio</a></li>
     <li><a href="#demo">Demo</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#events">Events</a></li>
     <li><a href="#genres">Genres</a></li>
-    <li><a href="#tone">Tone</a></li>
     <li><a href="#studio">Studio</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="https://linktr.ee/JettJensen" target="_blank" rel="noopener">Socials</a></li>
@@ -929,44 +1029,6 @@
 
 <hr class="divider">
 
-<!-- ── Demo ── -->
-<div class="page-section" id="demo">
-  <div class="reveal">
-    <div class="section-label">Voice demos</div>
-    <div class="section-title">Hear the <span>Range</span></div>
-    <p class="section-intro">Demo reels are in production. Check back soon &mdash; or reach out directly if you want to discuss a project in the meantime.</p>
-  </div>
-
-  <div class="demo-grid reveal">
-    <div class="demo-card">
-      <div class="demo-num">Demo I</div>
-      <div class="demo-title">Romance Demo</div>
-      <div class="demo-tag">Slow burn &middot; Tension &middot; Emotional depth</div>
-      <div class="demo-placeholder">Coming Soon</div>
-    </div>
-    <div class="demo-card">
-      <div class="demo-num">Demo II</div>
-      <div class="demo-title">Dark Romance Demo</div>
-      <div class="demo-tag">Morally gray &middot; Intensity &middot; Character work</div>
-      <div class="demo-placeholder">Coming Soon</div>
-    </div>
-    <div class="demo-card">
-      <div class="demo-num">Demo III</div>
-      <div class="demo-title">Comedy &amp; Banter Demo</div>
-      <div class="demo-tag">Snark &middot; Witty FMC &middot; Enemies to lovers</div>
-      <div class="demo-placeholder">Coming Soon</div>
-    </div>
-    <div class="demo-card">
-      <div class="demo-num">Demo IV</div>
-      <div class="demo-title">General Range Demo</div>
-      <div class="demo-tag">Versatility &middot; Tone range &middot; Character variety</div>
-      <div class="demo-placeholder">Coming Soon</div>
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
-
 <!-- ── Projects ── -->
 <div class="page-section" id="projects">
   <div class="reveal">
@@ -979,34 +1041,110 @@
     <div class="projects-col">
       <div class="projects-col-label">In the Booth</div>
       <div class="project-item">
-        <div class="project-title">All Hallow's Eve</div>
-        <div class="project-meta">Kenna Bellrae</div>
+        <div class="project-title">Veiled</div>
+        <div class="project-meta">Cooper James &middot; Additional Character</div>
+      </div>
+      <div class="project-item">
+        <div class="project-title">The Pendragon Prophecy</div>
+        <div class="project-meta">R.W. McNabb</div>
+      </div>
+      <div class="project-item">
+        <div class="project-title">Prophecied Son</div>
+        <div class="project-meta">Tim Samson &middot; The Trucidator Chronicles</div>
+      </div>
+      <div class="project-item">
+        <div class="project-title">Immortal Death</div>
+        <div class="project-meta">Tim Samson &middot; The Trucidator Chronicles</div>
+      </div>
+      <div class="project-item">
+        <div class="project-title">Moonlit Fire</div>
+        <div class="project-meta">Tim Samson &middot; The Trucidator Chronicles</div>
+      </div>
+    </div>
+    <div class="projects-col">
+      <div class="projects-col-label">In Production</div>
+      <div class="project-item">
+        <div class="project-title">Veiled</div>
+        <div class="project-meta">Cooper James</div>
+      </div>
+      <div class="project-item">
+        <div class="project-title">The Pendragon Prodigy</div>
+        <div class="project-meta">R.W. McNabb</div>
+      </div>
+      <div class="project-item">
+        <div class="project-title">Bitten By Choice</div>
+        <div class="project-meta">Casiddie Williams</div>
       </div>
       <div class="project-item">
         <div class="project-title">Widow's Fire</div>
         <div class="project-meta">J.P. Smith</div>
       </div>
       <div class="project-item">
-        <div class="project-title">Bitten By Choice</div>
-        <div class="project-meta">Casiddie Williams</div>
-      </div>
-    </div>
-    <div class="projects-col">
-      <div class="projects-col-label">In Production</div>
-      <div class="project-item">
-        <div class="project-title">The Pendragon Prodigy</div>
-        <div class="project-meta">R.W. McNabb</div>
-      </div>
-      <div class="project-item">
-        <div class="project-title">Veiled</div>
-        <div class="project-meta">Cooper James</div>
+        <div class="project-title">All Hallow's Eve</div>
+        <div class="project-meta">Kenna Belrae</div>
       </div>
     </div>
     <div class="projects-col">
       <div class="projects-col-label">Completed</div>
-      <div class="coming-soon-card" style="border:none;padding:20px 0;text-align:left;">
-        <div class="cs-label">Coming Soon</div>
-        <div class="cs-sub">Finished titles will be listed here with links to listen.</div>
+      <div class="project-item">
+        <a href="https://www.audible.com/ac/Summer-Lovin-Audiobook/B0HJ9BF9HQ?source_code=ASSGB149080119000H&share_location=pdp" target="_blank" rel="noopener" class="project-link">
+          <div class="project-title">Summer Lovin' <span class="project-anthology">Anthology</span></div>
+          <div class="project-meta">Spellwings Press</div>
+          <div class="project-note">Featuring: The Ghost of Bluecrest</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ── Upcoming Events ── -->
+<div class="page-section" id="events">
+  <div class="reveal">
+    <div class="section-label">On the road</div>
+    <div class="section-title">Upcoming <span>Events</span></div>
+  </div>
+
+  <div class="events-list reveal">
+    <div class="event-item">
+      <div class="event-date">Oct 24, 2026</div>
+      <div class="event-body">
+        <div class="event-name">Bloodmoon Masquerade</div>
+        <div class="event-location">Pinehurst, TX</div>
+        <div class="event-with">with Cooper James</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date">Jan 20&ndash;30, 2027</div>
+      <div class="event-body">
+        <div class="event-name">D.A.R.K.</div>
+        <div class="event-location">York, PA</div>
+        <div class="event-with">with Cooper James</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date">Feb 4&ndash;6, 2027</div>
+      <div class="event-body">
+        <div class="event-name">Kink &amp; Ink</div>
+        <div class="event-location">Dallas, TX</div>
+        <div class="event-with">with Kenna Belrae</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date">Apr 23&ndash;25, 2027</div>
+      <div class="event-body">
+        <div class="event-name">Inks &amp; Echoes</div>
+        <div class="event-location">Eustis, FL</div>
+        <div class="event-with">Featured VA / Narrator</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date">Oct 29&ndash;31, 2027</div>
+      <div class="event-body">
+        <div class="event-name">Minutes After Midnight</div>
+        <div class="event-location">New Orleans, LA</div>
+        <div class="event-with">Featured VA / Narrator</div>
       </div>
     </div>
   </div>
@@ -1058,38 +1196,38 @@
 
 <hr class="divider">
 
-<!-- ── Tone ── -->
-<div class="page-section" id="tone">
+<!-- ── Demo ── -->
+<div class="page-section" id="demo">
   <div class="reveal">
-    <div class="section-label">Voice &amp; delivery</div>
-    <div class="section-title">Tone &amp; <span>Range</span></div>
-    <p class="section-intro">Every story has a voice. These are the ones that come most naturally &mdash; and the ones being actively developed.</p>
+    <div class="section-label">Voice demos</div>
+    <div class="section-title">Hear the <span>Range</span></div>
+    <p class="section-intro">Demo reels are in production. Check back soon &mdash; or reach out directly if you want to discuss a project in the meantime.</p>
   </div>
 
-  <div class="tone-grid reveal">
-    <div class="tone-card">
-      <div class="tone-name">Emotional Depth</div>
-      <div class="tone-desc">The quiet moments that crack something open. Grief, longing, the look across the room that means everything.</div>
+  <div class="demo-grid reveal">
+    <div class="demo-card">
+      <div class="demo-num">Demo I</div>
+      <div class="demo-title">Romance Demo</div>
+      <div class="demo-tag">Slow burn &middot; Tension &middot; Emotional depth</div>
+      <div class="demo-placeholder">Coming Soon</div>
     </div>
-    <div class="tone-card">
-      <div class="tone-name">Tension &amp; Slow Burn</div>
-      <div class="tone-desc">Building it until the reader can't breathe. Restraint that makes the release hit harder.</div>
+    <div class="demo-card">
+      <div class="demo-num">Demo II</div>
+      <div class="demo-title">Dark Romance Demo</div>
+      <div class="demo-tag">Morally gray &middot; Intensity &middot; Character work</div>
+      <div class="demo-placeholder">Coming Soon</div>
     </div>
-    <div class="tone-card">
-      <div class="tone-name">Snark &amp; Banter</div>
-      <div class="tone-desc">Wit with a razor edge. Characters who fight with words before they fall for each other.</div>
+    <div class="demo-card">
+      <div class="demo-num">Demo III</div>
+      <div class="demo-title">Comedy &amp; Banter Demo</div>
+      <div class="demo-tag">Snark &middot; Witty FMC &middot; Enemies to lovers</div>
+      <div class="demo-placeholder">Coming Soon</div>
     </div>
-    <div class="tone-card">
-      <div class="tone-name">Character Voices</div>
-      <div class="tone-desc">Distinct, consistent characterization across full-length narration. Actively building this range.</div>
-    </div>
-    <div class="tone-card">
-      <div class="tone-name">Duet</div>
-      <div class="tone-desc">Two voices, one story. Collaborative narration that keeps chemistry alive across every chapter.</div>
-    </div>
-    <div class="tone-card">
-      <div class="tone-name">Dark &amp; Intense</div>
-      <div class="tone-desc">Stories that go to difficult places. Darkness that serves the story. Open to challenging material.</div>
+    <div class="demo-card">
+      <div class="demo-num">Demo IV</div>
+      <div class="demo-title">General Range Demo</div>
+      <div class="demo-tag">Versatility &middot; Tone range &middot; Character variety</div>
+      <div class="demo-placeholder">Coming Soon</div>
     </div>
   </div>
 </div>
@@ -1111,7 +1249,8 @@
         Dachman Audio DA-87i<br>
         Dachman Audio DA-87SE<br>
         Shure SM7B<br>
-        Shure Super 55
+        Shure Super 55<br>
+        Blue Bluebird
       </td>
     </tr>
     <tr>
