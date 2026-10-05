@@ -695,7 +695,7 @@
     height: 100%;
     position: relative;
     transform-origin: left center;
-    transition: transform 1.6s cubic-bezier(0.65, 0.05, 0.2, 1);
+    transition: transform 2.6s cubic-bezier(0.6, 0.05, 0.25, 1);
     will-change: transform;
     backface-visibility: hidden;
   }
@@ -748,15 +748,16 @@
 
     // After doors swing open, fade to black then load main site
     setTimeout(() => {
-      doors.style.transition = 'opacity 0.6s ease';
-      doors.style.background = '#030303';
-      // fade the void to full black
-      document.querySelector('.door-void').style.transition = 'opacity 0s';
-    }, 1500);
+      // Fade entire screen to black
+      const blackout = document.createElement('div');
+      blackout.style.cssText = 'position:fixed;inset:0;background:#030303;z-index:99999;opacity:0;transition:opacity 0.7s ease;pointer-events:none;';
+      document.body.appendChild(blackout);
+      setTimeout(() => blackout.style.opacity = '1', 20);
+    }, 2400);
 
     setTimeout(() => {
       window.location.href = 'main.html';
-    }, 2200);
+    }, 3300);
   }
 </script>
 
