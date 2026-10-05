@@ -262,7 +262,7 @@
   <p class="gate-sub">You must be 18 or older to enter</p>
 
   <div class="gate-buttons">
-    <a href="main.html" class="btn-enter">Enter The Booth</a>
+    <button onclick="openDoors()" class="btn-enter">Enter The Booth</button>
     <button onclick="showKidMessage()" class="btn-leave">I'm Not 18</button>
   </div>
 
@@ -306,11 +306,457 @@
   }
 </style>
 
+<!-- ── Door overlay ── -->
+<div class="doors" id="doors" aria-hidden="true">
+  <div class="door door-left" id="doorLeft">
+    <svg class="door-svg" viewBox="0 0 400 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Deep oak wood grain filter -->
+        <filter id="grainL" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018 0.55" numOctaves="6" seed="3" result="noise"/>
+          <feColorMatrix type="saturate" values="0.4" in="noise" result="tinted"/>
+          <feBlend in="SourceGraphic" in2="tinted" mode="multiply" result="blended"/>
+          <feTurbulence type="turbulence" baseFrequency="0.008 0.3" numOctaves="3" seed="9" result="noise2"/>
+          <feDisplacementMap in="blended" in2="noise2" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="shadowL">
+          <feDropShadow dx="8" dy="0" stdDeviation="12" flood-color="#000" flood-opacity="0.9"/>
+        </filter>
+        <filter id="innerShadow">
+          <feOffset dx="0" dy="3"/>
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+        <!-- Aged brass gradient -->
+        <linearGradient id="brassV" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#6b4e1a"/>
+          <stop offset="18%"  stop-color="#c9982a"/>
+          <stop offset="35%"  stop-color="#e8c060"/>
+          <stop offset="50%"  stop-color="#b8862a"/>
+          <stop offset="68%"  stop-color="#d4a030"/>
+          <stop offset="85%"  stop-color="#8a6010"/>
+          <stop offset="100%" stop-color="#5a3e0e"/>
+        </linearGradient>
+        <radialGradient id="brassKnob" cx="38%" cy="35%" r="60%">
+          <stop offset="0%"   stop-color="#f0d060"/>
+          <stop offset="40%"  stop-color="#c49030"/>
+          <stop offset="100%" stop-color="#4a3008"/>
+        </radialGradient>
+        <!-- Wood base gradient - very dark aged oak -->
+        <linearGradient id="oakL" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#0a0602"/>
+          <stop offset="8%"   stop-color="#150d04"/>
+          <stop offset="22%"  stop-color="#1e1208"/>
+          <stop offset="40%"  stop-color="#170e05"/>
+          <stop offset="58%"  stop-color="#1c1208"/>
+          <stop offset="75%"  stop-color="#130c04"/>
+          <stop offset="88%"  stop-color="#1a1006"/>
+          <stop offset="100%" stop-color="#0c0803"/>
+        </linearGradient>
+        <!-- Panel recess shadow -->
+        <linearGradient id="panelShade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#000" stop-opacity="0.7"/>
+          <stop offset="15%"  stop-color="#000" stop-opacity="0.2"/>
+          <stop offset="85%"  stop-color="#000" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+        </linearGradient>
+        <linearGradient id="panelShadeH" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#000" stop-opacity="0.5"/>
+          <stop offset="8%"   stop-color="#000" stop-opacity="0.1"/>
+          <stop offset="92%"  stop-color="#000" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Door base - aged dark oak -->
+      <rect width="400" height="900" fill="url(#oakL)" filter="url(#grainL)"/>
+
+      <!-- Subtle vertical grain streaks -->
+      <rect x="0"   width="2"  height="900" fill="#000" opacity="0.25"/>
+      <rect x="28"  width="1"  height="900" fill="#fff" opacity="0.018"/>
+      <rect x="65"  width="2"  height="900" fill="#000" opacity="0.18"/>
+      <rect x="110" width="1"  height="900" fill="#fff" opacity="0.025"/>
+      <rect x="155" width="2"  height="900" fill="#000" opacity="0.12"/>
+      <rect x="198" width="1"  height="900" fill="#fff" opacity="0.02"/>
+      <rect x="240" width="2"  height="900" fill="#000" opacity="0.15"/>
+      <rect x="285" width="1"  height="900" fill="#fff" opacity="0.018"/>
+      <rect x="330" width="2"  height="900" fill="#000" opacity="0.2"/>
+      <rect x="370" width="1"  height="900" fill="#fff" opacity="0.015"/>
+      <rect x="398" width="2"  height="900" fill="#000" opacity="0.3"/>
+
+      <!-- Outer frame border - raised moulding effect -->
+      <rect x="0" y="0" width="400" height="900" fill="none" stroke="#2a1c08" stroke-width="18"/>
+      <rect x="9" y="9" width="382" height="882" fill="none" stroke="#0e0803" stroke-width="4"/>
+      <!-- Frame highlight -->
+      <rect x="18" y="18" width="364" height="864" fill="none" stroke="rgba(180,130,50,0.12)" stroke-width="1"/>
+
+      <!-- ─ Top panel (arched feel, recessed) ─ -->
+      <!-- Panel shadow border -->
+      <rect x="52" y="48" width="296" height="260" rx="2" fill="#060401" opacity="0.9"/>
+      <!-- Panel recess -->
+      <rect x="56" y="52" width="288" height="252" rx="1" fill="url(#panelShadeH)"/>
+      <rect x="56" y="52" width="288" height="252" rx="1" fill="url(#panelShade)" opacity="0.8"/>
+      <!-- Panel inner wood -->
+      <rect x="56" y="52" width="288" height="252" rx="1" fill="#12090400" filter="url(#grainL)" opacity="0.6"/>
+      <!-- Panel moulding - inner highlight lines -->
+      <rect x="62" y="58" width="276" height="240" rx="1" fill="none" stroke="rgba(160,110,35,0.18)" stroke-width="1.5"/>
+      <rect x="66" y="62" width="268" height="232" rx="1" fill="none" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <!-- ─ Middle panel (taller, main panel) ─ -->
+      <rect x="52" y="332" width="296" height="380" rx="2" fill="#060401" opacity="0.9"/>
+      <rect x="56" y="336" width="288" height="372" rx="1" fill="url(#panelShadeH)"/>
+      <rect x="56" y="336" width="288" height="372" rx="1" fill="url(#panelShade)" opacity="0.8"/>
+      <rect x="62" y="342" width="276" height="360" rx="1" fill="none" stroke="rgba(160,110,35,0.18)" stroke-width="1.5"/>
+      <rect x="66" y="346" width="268" height="352" rx="1" fill="none" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <!-- ─ Bottom panel (narrow) ─ -->
+      <rect x="52" y="740" width="296" height="110" rx="2" fill="#060401" opacity="0.9"/>
+      <rect x="56" y="744" width="288" height="102" rx="1" fill="url(#panelShadeH)"/>
+      <rect x="56" y="744" width="288" height="102" rx="1" fill="url(#panelShade)" opacity="0.7"/>
+      <rect x="62" y="750" width="276" height="90" rx="1" fill="none" stroke="rgba(160,110,35,0.15)" stroke-width="1.5"/>
+      <rect x="66" y="754" width="268" height="82" rx="1" fill="none" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <!-- Horizontal rails (structural cross pieces) -->
+      <!-- Top rail -->
+      <rect x="18" y="38" width="364" height="22" fill="url(#oakL)" opacity="0.95"/>
+      <line x1="18" y1="38"  x2="382" y2="38"  stroke="rgba(0,0,0,0.8)" stroke-width="1.5"/>
+      <line x1="18" y1="59"  x2="382" y2="59"  stroke="rgba(0,0,0,0.7)" stroke-width="1.5"/>
+      <line x1="18" y1="39"  x2="382" y2="39"  stroke="rgba(180,130,50,0.1)" stroke-width="0.5"/>
+      <!-- Mid rail 1 -->
+      <rect x="18" y="320" width="364" height="24" fill="url(#oakL)" opacity="0.95"/>
+      <line x1="18" y1="320" x2="382" y2="320" stroke="rgba(0,0,0,0.8)" stroke-width="1.5"/>
+      <line x1="18" y1="343" x2="382" y2="343" stroke="rgba(0,0,0,0.7)" stroke-width="1.5"/>
+      <line x1="18" y1="321" x2="382" y2="321" stroke="rgba(180,130,50,0.1)" stroke-width="0.5"/>
+      <!-- Mid rail 2 -->
+      <rect x="18" y="728" width="364" height="24" fill="url(#oakL)" opacity="0.95"/>
+      <line x1="18" y1="728" x2="382" y2="728" stroke="rgba(0,0,0,0.8)" stroke-width="1.5"/>
+      <line x1="18" y1="751" x2="382" y2="751" stroke="rgba(0,0,0,0.7)" stroke-width="1.5"/>
+      <line x1="18" y1="729" x2="382" y2="729" stroke="rgba(180,130,50,0.1)" stroke-width="0.5"/>
+      <!-- Bottom rail -->
+      <rect x="18" y="866" width="364" height="24" fill="url(#oakL)" opacity="0.95"/>
+      <line x1="18" y1="866" x2="382" y2="866" stroke="rgba(0,0,0,0.8)" stroke-width="1.5"/>
+
+      <!-- Left stile edge shadow (hinge side depth) -->
+      <rect x="0" y="0" width="20" height="900" fill="url(#oakL)"/>
+      <rect x="0" y="0" width="8"  height="900" fill="rgba(0,0,0,0.5)"/>
+      <rect x="8" y="0" width="2"  height="900" fill="rgba(0,0,0,0.25)"/>
+
+      <!-- Right edge - meeting stile, slightly lighter (light seam) -->
+      <rect x="388" y="0" width="12" height="900" fill="rgba(0,0,0,0.35)"/>
+      <rect x="396" y="0" width="4"  height="900" fill="rgba(200,23,42,0.07)"/>
+
+      <!-- Aged varnish overlay - darkens edges, brightens center slightly -->
+      <radialGradient id="varnish" cx="40%" cy="50%" r="65%">
+        <stop offset="0%"   stop-color="rgba(255,200,80,0.04)"/>
+        <stop offset="60%"  stop-color="rgba(0,0,0,0)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0.45)"/>
+      </radialGradient>
+      <rect width="400" height="900" fill="url(#varnish)"/>
+
+      <!-- Wear marks - subtle scratches -->
+      <line x1="80"  y1="200" x2="320" y2="198" stroke="rgba(255,255,255,0.018)" stroke-width="0.5"/>
+      <line x1="120" y1="500" x2="280" y2="503" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/>
+      <line x1="60"  y1="650" x2="200" y2="648" stroke="rgba(255,255,255,0.012)" stroke-width="0.5"/>
+
+      <!-- ─ Brass escutcheon plate (handle backing) ─ -->
+      <rect x="330" y="418" width="28" height="90" rx="4" fill="url(#brassV)" opacity="0.9"/>
+      <rect x="331" y="419" width="26" height="88" rx="3" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+      <rect x="333" y="421" width="22" height="3"  rx="1" fill="rgba(255,230,100,0.35)"/>
+      <!-- Screw heads top/bottom -->
+      <circle cx="344" cy="427" r="3.5" fill="#7a5810" stroke="rgba(255,200,60,0.3)" stroke-width="0.5"/>
+      <line x1="341.5" y1="427" x2="346.5" y2="427" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+      <circle cx="344" cy="499" r="3.5" fill="#7a5810" stroke="rgba(255,200,60,0.3)" stroke-width="0.5"/>
+      <line x1="341.5" y1="499" x2="346.5" y2="499" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <!-- ─ Door handle / pull bar ─ -->
+      <rect x="337" y="440" width="14" height="46" rx="7" fill="url(#brassV)"/>
+      <rect x="338" y="441" width="12" height="44" rx="6" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="0.5"/>
+      <!-- Handle highlight -->
+      <rect x="339" y="443" width="4" height="40" rx="2" fill="rgba(255,230,100,0.2)"/>
+      <!-- Handle wear - dark middle grip -->
+      <rect x="337" y="455" width="14" height="20" rx="4" fill="rgba(0,0,0,0.25)"/>
+
+      <!-- ─ Keyhole escutcheon ─ -->
+      <ellipse cx="344" cy="526" rx="9" ry="11" fill="url(#brassV)" opacity="0.85"/>
+      <ellipse cx="344" cy="526" rx="9" ry="11" fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="1"/>
+      <!-- Keyhole shape -->
+      <circle cx="344" cy="521" r="3.5" fill="#020100"/>
+      <path d="M341.5,524 L346.5,524 L345,533 L343,533 Z" fill="#020100"/>
+      <!-- Keyhole highlight -->
+      <ellipse cx="344" cy="526" rx="8" ry="10" fill="none" stroke="rgba(255,200,60,0.2)" stroke-width="0.5"/>
+
+      <!-- Hinge plates (left side) -->
+      <rect x="0" y="110" width="22" height="55" rx="2" fill="url(#brassV)" opacity="0.8"/>
+      <circle cx="11" cy="122" r="4" fill="#5a3e0e" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="8" y1="122" x2="14" y2="122" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+      <circle cx="11" cy="154" r="4" fill="#5a3e0e" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="8" y1="154" x2="14" y2="154" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <rect x="0" y="560" width="22" height="55" rx="2" fill="url(#brassV)" opacity="0.8"/>
+      <circle cx="11" cy="572" r="4" fill="#5a3e0e" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="8" y1="572" x2="14" y2="572" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+      <circle cx="11" cy="604" r="4" fill="#5a3e0e" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="8" y1="604" x2="14" y2="604" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <!-- Final vignette - heavy corner darkening -->
+      <radialGradient id="vigL" cx="55%" cy="50%" r="70%">
+        <stop offset="0%"   stop-color="transparent"/>
+        <stop offset="70%"  stop-color="rgba(0,0,0,0.2)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0.7)"/>
+      </radialGradient>
+      <rect width="400" height="900" fill="url(#vigL)"/>
+    </svg>
+  </div>
+
+  <div class="door door-right" id="doorRight">
+    <svg class="door-svg" viewBox="0 0 400 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="grainR" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018 0.55" numOctaves="6" seed="7" result="noise"/>
+          <feColorMatrix type="saturate" values="0.4" in="noise" result="tinted"/>
+          <feBlend in="SourceGraphic" in2="tinted" mode="multiply" result="blended"/>
+          <feTurbulence type="turbulence" baseFrequency="0.008 0.3" numOctaves="3" seed="12" result="noise2"/>
+          <feDisplacementMap in="blended" in2="noise2" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <linearGradient id="oakR" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#0d0803"/>
+          <stop offset="12%"  stop-color="#1a1006"/>
+          <stop offset="28%"  stop-color="#150e05"/>
+          <stop offset="45%"  stop-color="#1c1208"/>
+          <stop offset="62%"  stop-color="#160e05"/>
+          <stop offset="80%"  stop-color="#1e1308"/>
+          <stop offset="92%"  stop-color="#130c04"/>
+          <stop offset="100%" stop-color="#0a0602"/>
+        </linearGradient>
+        <linearGradient id="brassVR" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#5a3e0e"/>
+          <stop offset="15%"  stop-color="#8a6010"/>
+          <stop offset="32%"  stop-color="#d4a030"/>
+          <stop offset="50%"  stop-color="#b8862a"/>
+          <stop offset="65%"  stop-color="#e8c060"/>
+          <stop offset="82%"  stop-color="#c9982a"/>
+          <stop offset="100%" stop-color="#6b4e1a"/>
+        </linearGradient>
+        <radialGradient id="vigR" cx="45%" cy="50%" r="70%">
+          <stop offset="0%"   stop-color="transparent"/>
+          <stop offset="70%"  stop-color="rgba(0,0,0,0.2)"/>
+          <stop offset="100%" stop-color="rgba(0,0,0,0.7)"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Door base -->
+      <rect width="400" height="900" fill="url(#oakR)" filter="url(#grainR)"/>
+
+      <!-- Grain streaks (mirrored) -->
+      <rect x="398" width="2"  height="900" fill="#000" opacity="0.25"/>
+      <rect x="370" width="1"  height="900" fill="#fff" opacity="0.018"/>
+      <rect x="330" width="2"  height="900" fill="#000" opacity="0.18"/>
+      <rect x="285" width="1"  height="900" fill="#fff" opacity="0.025"/>
+      <rect x="240" width="2"  height="900" fill="#000" opacity="0.12"/>
+      <rect x="198" width="1"  height="900" fill="#fff" opacity="0.02"/>
+      <rect x="155" width="2"  height="900" fill="#000" opacity="0.15"/>
+      <rect x="110" width="1"  height="900" fill="#fff" opacity="0.018"/>
+      <rect x="65"  width="2"  height="900" fill="#000" opacity="0.2"/>
+      <rect x="28"  width="1"  height="900" fill="#fff" opacity="0.015"/>
+      <rect x="0"   width="2"  height="900" fill="#000" opacity="0.3"/>
+
+      <!-- Frame -->
+      <rect x="0" y="0" width="400" height="900" fill="none" stroke="#2a1c08" stroke-width="18"/>
+      <rect x="9" y="9" width="382" height="882" fill="none" stroke="#0e0803" stroke-width="4"/>
+      <rect x="18" y="18" width="364" height="864" fill="none" stroke="rgba(180,130,50,0.12)" stroke-width="1"/>
+
+      <!-- Panels (mirrored) -->
+      <rect x="52" y="48"  width="296" height="260" rx="2" fill="#060401" opacity="0.9"/>
+      <rect x="56" y="52"  width="288" height="252" rx="1" fill="url(#panelShadeH)" opacity="0.9"/>
+      <rect x="56" y="52"  width="288" height="252" rx="1" fill="url(#panelShade)" opacity="0.8"/>
+      <rect x="62" y="58"  width="276" height="240" rx="1" fill="none" stroke="rgba(160,110,35,0.18)" stroke-width="1.5"/>
+      <rect x="66" y="62"  width="268" height="232" rx="1" fill="none" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <rect x="52" y="332" width="296" height="380" rx="2" fill="#060401" opacity="0.9"/>
+      <rect x="56" y="336" width="288" height="372" rx="1" fill="url(#panelShadeH)" opacity="0.9"/>
+      <rect x="56" y="336" width="288" height="372" rx="1" fill="url(#panelShade)" opacity="0.8"/>
+      <rect x="62" y="342" width="276" height="360" rx="1" fill="none" stroke="rgba(160,110,35,0.18)" stroke-width="1.5"/>
+      <rect x="66" y="346" width="268" height="352" rx="1" fill="none" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <rect x="52" y="740" width="296" height="110" rx="2" fill="#060401" opacity="0.9"/>
+      <rect x="56" y="744" width="288" height="102" rx="1" fill="url(#panelShadeH)" opacity="0.9"/>
+      <rect x="56" y="744" width="288" height="102" rx="1" fill="url(#panelShade)" opacity="0.7"/>
+      <rect x="62" y="750" width="276" height="90"  rx="1" fill="none" stroke="rgba(160,110,35,0.15)" stroke-width="1.5"/>
+      <rect x="66" y="754" width="268" height="82"  rx="1" fill="none" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <!-- Rails -->
+      <rect x="18" y="38"  width="364" height="22" fill="url(#oakR)" opacity="0.95"/>
+      <line x1="18" y1="38"  x2="382" y2="38"  stroke="rgba(0,0,0,0.8)" stroke-width="1.5"/>
+      <line x1="18" y1="59"  x2="382" y2="59"  stroke="rgba(0,0,0,0.7)" stroke-width="1.5"/>
+      <line x1="18" y1="39"  x2="382" y2="39"  stroke="rgba(180,130,50,0.1)" stroke-width="0.5"/>
+
+      <rect x="18" y="320" width="364" height="24" fill="url(#oakR)" opacity="0.95"/>
+      <line x1="18" y1="320" x2="382" y2="320" stroke="rgba(0,0,0,0.8)" stroke-width="1.5"/>
+      <line x1="18" y1="343" x2="382" y2="343" stroke="rgba(0,0,0,0.7)" stroke-width="1.5"/>
+      <line x1="18" y1="321" x2="382" y2="321" stroke="rgba(180,130,50,0.1)" stroke-width="0.5"/>
+
+      <rect x="18" y="728" width="364" height="24" fill="url(#oakR)" opacity="0.95"/>
+      <line x1="18" y1="728" x2="382" y2="728" stroke="rgba(0,0,0,0.8)" stroke-width="1.5"/>
+      <line x1="18" y1="751" x2="382" y2="751" stroke="rgba(0,0,0,0.7)" stroke-width="1.5"/>
+      <line x1="18" y1="729" x2="382" y2="729" stroke="rgba(180,130,50,0.1)" stroke-width="0.5"/>
+
+      <rect x="18" y="866" width="364" height="24" fill="url(#oakR)" opacity="0.95"/>
+      <line x1="18" y1="866" x2="382" y2="866" stroke="rgba(0,0,0,0.8)" stroke-width="1.5"/>
+
+      <!-- Right stile (hinge side) -->
+      <rect x="378" y="0" width="22" height="900" fill="url(#oakR)"/>
+      <rect x="390" y="0" width="10" height="900" fill="rgba(0,0,0,0.5)"/>
+      <rect x="388" y="0" width="2"  height="900" fill="rgba(0,0,0,0.25)"/>
+
+      <!-- Left edge - meeting stile -->
+      <rect x="0" y="0" width="12" height="900" fill="rgba(0,0,0,0.35)"/>
+      <rect x="0" y="0" width="4"  height="900" fill="rgba(200,23,42,0.07)"/>
+
+      <!-- Varnish -->
+      <radialGradient id="varnishR" cx="60%" cy="50%" r="65%">
+        <stop offset="0%"   stop-color="rgba(255,200,80,0.04)"/>
+        <stop offset="60%"  stop-color="rgba(0,0,0,0)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0.45)"/>
+      </radialGradient>
+      <rect width="400" height="900" fill="url(#varnishR)"/>
+
+      <!-- Wear marks -->
+      <line x1="80"  y1="200" x2="320" y2="198" stroke="rgba(255,255,255,0.018)" stroke-width="0.5"/>
+      <line x1="120" y1="500" x2="280" y2="503" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/>
+
+      <!-- Brass hardware (mirrored to left side) -->
+      <rect x="42" y="418" width="28" height="90" rx="4" fill="url(#brassVR)" opacity="0.9"/>
+      <rect x="43" y="419" width="26" height="88" rx="3" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+      <rect x="45" y="421" width="22" height="3"  rx="1" fill="rgba(255,230,100,0.35)"/>
+      <circle cx="56" cy="427" r="3.5" fill="#7a5810" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="53.5" y1="427" x2="58.5" y2="427" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+      <circle cx="56" cy="499" r="3.5" fill="#7a5810" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="53.5" y1="499" x2="58.5" y2="499" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <!-- Handle -->
+      <rect x="49" y="440" width="14" height="46" rx="7" fill="url(#brassVR)"/>
+      <rect x="50" y="441" width="12" height="44" rx="6" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="0.5"/>
+      <rect x="51" y="443" width="4"  height="40" rx="2" fill="rgba(255,230,100,0.2)"/>
+      <rect x="49" y="455" width="14" height="20" rx="4" fill="rgba(0,0,0,0.25)"/>
+
+      <!-- Keyhole -->
+      <ellipse cx="56" cy="526" rx="9" ry="11" fill="url(#brassVR)" opacity="0.85"/>
+      <ellipse cx="56" cy="526" rx="9" ry="11" fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="1"/>
+      <circle cx="56" cy="521" r="3.5" fill="#020100"/>
+      <path d="M53.5,524 L58.5,524 L57,533 L55,533 Z" fill="#020100"/>
+      <ellipse cx="56" cy="526" rx="8" ry="10" fill="none" stroke="rgba(255,200,60,0.2)" stroke-width="0.5"/>
+
+      <!-- Hinges (right side) -->
+      <rect x="378" y="110" width="22" height="55" rx="2" fill="url(#brassVR)" opacity="0.8"/>
+      <circle cx="389" cy="122" r="4" fill="#5a3e0e" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="386" y1="122" x2="392" y2="122" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+      <circle cx="389" cy="154" r="4" fill="#5a3e0e" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="386" y1="154" x2="392" y2="154" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <rect x="378" y="560" width="22" height="55" rx="2" fill="url(#brassVR)" opacity="0.8"/>
+      <circle cx="389" cy="572" r="4" fill="#5a3e0e" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="386" y1="572" x2="392" y2="572" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+      <circle cx="389" cy="604" r="4" fill="#5a3e0e" stroke="rgba(200,160,40,0.4)" stroke-width="0.5"/>
+      <line x1="386" y1="604" x2="392" y2="604" stroke="rgba(0,0,0,0.7)" stroke-width="1"/>
+
+      <rect width="400" height="900" fill="url(#vigR)"/>
+    </svg>
+  </div>
+
+  <!-- Deep darkness behind the doors -->
+  <div class="door-void"></div>
+</div>
+
+<style>
+  .doors {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .doors.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .door-void {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, #0a0402 0%, #010000 100%);
+    z-index: -1;
+  }
+
+  .door {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    transform-origin: left center;
+    transition: transform 1.6s cubic-bezier(0.65, 0.05, 0.2, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  .door-right {
+    transform-origin: right center;
+  }
+
+  .door-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Shadow cast by doors as they open */
+  .door-left {
+    box-shadow: 4px 0 40px rgba(0,0,0,0.95), 2px 0 8px rgba(0,0,0,0.8);
+    filter: drop-shadow(8px 0 20px rgba(0,0,0,0.9));
+  }
+
+  .door-right {
+    box-shadow: -4px 0 40px rgba(0,0,0,0.95), -2px 0 8px rgba(0,0,0,0.8);
+    filter: drop-shadow(-8px 0 20px rgba(0,0,0,0.9));
+  }
+
+  .doors.open .door-left {
+    transform: perspective(1400px) rotateY(-115deg);
+    filter: drop-shadow(20px 0 30px rgba(0,0,0,0.95)) brightness(0.6);
+  }
+
+  .doors.open .door-right {
+    transform: perspective(1400px) rotateY(115deg);
+    filter: drop-shadow(-20px 0 30px rgba(0,0,0,0.95)) brightness(0.6);
+  }
+</style>
+
 <script>
   function showKidMessage() {
     const msg = document.getElementById('kidMsg');
     msg.style.display = 'block';
     setTimeout(() => msg.classList.add('visible'), 10);
+  }
+
+  function openDoors() {
+    const doors = document.getElementById('doors');
+
+    // Snap doors visible instantly, then swing open
+    doors.classList.add('visible');
+    setTimeout(() => doors.classList.add('open'), 40);
+
+    // After doors swing open, fade to black then load main site
+    setTimeout(() => {
+      doors.style.transition = 'opacity 0.6s ease';
+      doors.style.background = '#030303';
+      // fade the void to full black
+      document.querySelector('.door-void').style.transition = 'opacity 0s';
+    }, 1500);
+
+    setTimeout(() => {
+      window.location.href = 'main.html';
+    }, 2200);
   }
 </script>
 
