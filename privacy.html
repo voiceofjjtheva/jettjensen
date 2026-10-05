@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy &mdash; Jett Jensen Productions, LLC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #070707;
+    --surface:      #0e0e0e;
+    --border:       #1a1a1a;
+    --border2:      #282828;
+    --primary:      #c8172a;
+    --primaryLight: #e8364e;
+    --accent:       #b8b8c0;
+    --text:         #e2e2e2;
+    --subtext:      #787878;
+    --dim:          #3a3a3a;
+    --bebas:        'Bebas Neue', sans-serif;
+    --barlow:       'Barlow Condensed', sans-serif;
+    --body:         'DM Sans', sans-serif;
+    --serif:        'Playfair Display', serif;
+    --display:      'Algerian', 'Cinzel Decorative', 'Playfair Display', serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.055'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.55;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(7,7,7,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 0 rgba(200,23,42,0.08), 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 17px;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 2px;
+  }
+
+  .nav-logo span { color: var(--primary); }
+
+  .nav-back {
+    font-family: var(--barlow);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--primaryLight); }
+
+  /* ── Content ── */
+  .page-wrap {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 120px 32px 80px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .section-label {
+    font-family: var(--barlow);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .page-title {
+    font-family: var(--display);
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.15;
+    letter-spacing: 1px;
+  }
+
+  .page-title span { color: var(--primary); }
+
+  .last-updated {
+    font-family: var(--barlow);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 48px;
+  }
+
+  .policy-section {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .policy-section:last-child {
+    border-bottom: none;
+  }
+
+  .policy-heading {
+    font-family: var(--barlow);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .policy-section p {
+    font-size: 14px;
+    color: var(--subtext);
+    line-height: 1.9;
+    margin-bottom: 14px;
+  }
+
+  .policy-section p:last-child { margin-bottom: 0; }
+
+  .policy-section a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border2);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .policy-section a:hover {
+    color: var(--primaryLight);
+    border-color: var(--primaryLight);
+  }
+
+  /* ── Footer ── */
+  footer {
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 740px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-name {
+    font-family: var(--display);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--dim);
+  }
+
+  .footer-name span { color: var(--primary); }
+
+  .footer-copy {
+    font-family: var(--barlow);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://jettjensen.com" class="nav-logo">Jett <span>Jensen</span></a>
+  <a href="main.html" class="nav-back">&larr; Back to Site</a>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="section-label">Legal</div>
+  <h1 class="page-title">Privacy <span>Policy</span></h1>
+  <div class="last-updated">Last updated: October 2026</div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Who We Are</div>
+    <p>This website is operated by Jett Jensen Productions, LLC, a Texas limited liability company. It serves as the professional web presence for Jett Jensen, audiobook narrator and voice actor.</p>
+    <p>For questions regarding this policy, contact us at <a href="mailto:VoiceOfJJtheVA@gmail.com">VoiceOfJJtheVA@gmail.com</a>.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Information We Collect</div>
+    <p>This is a static informational website. We do not operate any user accounts, login systems, or data collection forms.</p>
+    <p>The only information we may receive is what you voluntarily provide by sending an email to the address listed on this site. That information is used solely to respond to your inquiry and is not stored, sold, or shared with third parties.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Server & Hosting Logs</div>
+    <p>This site is hosted through Cloudflare Pages. As with all web hosting services, Cloudflare automatically collects standard server log data when you visit — including your IP address, browser type, operating system, referring URLs, and pages visited. This data is collected and processed by Cloudflare in accordance with their own privacy policy and is not accessible to or controlled by Jett Jensen Productions, LLC beyond standard analytics.</p>
+    <p>For more information, see <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare's Privacy Policy</a>.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Cookies</div>
+    <p>This website does not use cookies, tracking pixels, or any third-party analytics tools.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Third-Party Links</div>
+    <p>This site contains links to external platforms including Audible, Linktree, and others. Once you leave this site, you are subject to those platforms' own privacy policies. We have no control over and accept no responsibility for their content or practices.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Children's Privacy</div>
+    <p>This website contains mature content intended for adults 18 years of age and older. We do not knowingly collect any information from individuals under the age of 18. If you believe a minor has contacted us through this site, please notify us at <a href="mailto:VoiceOfJJtheVA@gmail.com">VoiceOfJJtheVA@gmail.com</a> and we will promptly address it.</p>
+    <p>Upon entering this site, visitors are required to confirm their age by clicking "Enter The Booth." By doing so, the visitor affirmatively represents that they are 18 years of age or older. Jett Jensen and Jett Jensen Productions, LLC make no representation that the age verification process is infallible and assume no liability for any individual who misrepresents their age to gain access to this site. Any person who provides false information to bypass the age gate does so at their own risk and bears sole responsibility for that decision.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Intellectual Property</div>
+    <p>All voice recordings, audio content, and creative works on this site are the property of Jett Jensen Productions, LLC. No AI voice cloning, synthetic reproduction, or machine learning usage of this voice or any content on this site is permitted.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Changes to This Policy</div>
+    <p>We may update this privacy policy from time to time. Any changes will be reflected on this page with an updated date. Continued use of the site following any changes constitutes acceptance of the revised policy.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-heading">Contact</div>
+    <p>Jett Jensen Productions, LLC<br>Texas, United States<br><a href="mailto:VoiceOfJJtheVA@gmail.com">VoiceOfJJtheVA@gmail.com</a></p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-name">Jett <span>Jensen</span></div>
+  <div class="footer-copy">&copy; Jett Jensen Productions, LLC</div>
+</footer>
+
+</body>
+</html>
