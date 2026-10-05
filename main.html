@@ -1051,10 +1051,18 @@
 </style>
 </head>
 <style>
-  body.page-hidden { opacity: 0; }
-  body.page-visible { opacity: 1; transition: opacity 0.8s ease; }
+  .page-blackout {
+    position: fixed;
+    inset: 0;
+    background: #030303;
+    z-index: 99999;
+    opacity: 1;
+    transition: opacity 1.1s ease;
+    pointer-events: none;
+  }
+  .page-blackout.lifted { opacity: 0; }
 </style>
-<body class="page-hidden">
+<body>
 
 <!-- ── Fixed watermark ── -->
 <div class="watermark" aria-hidden="true">I Don't Read<br>I Reveal</div>
@@ -1514,12 +1522,13 @@
     document.getElementById('mobileMenu').classList.remove('open');
   }
 
-  // Fade in after door transition
+  // Fade up from black after door transition
+  const blackout = document.createElement('div');
+  blackout.className = 'page-blackout';
+  document.body.prepend(blackout);
+
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.body.classList.remove('page-hidden');
-      document.body.classList.add('page-visible');
-    }, 80);
+    setTimeout(() => blackout.classList.add('lifted'), 120);
   });
 
   const observer = new IntersectionObserver((entries) => {
