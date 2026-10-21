@@ -1029,6 +1029,37 @@
     text-align: center;
   }
 
+  /* ── This Weekend badge ── */
+  .event-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    background: rgba(200,23,42,0.15);
+    border: 1px solid rgba(200,23,42,0.45);
+    border-radius: 3px;
+    font-family: var(--barlow);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary);
+    vertical-align: middle;
+  }
+
+  /* ── Mobile contrast boost ── */
+  @media (max-width: 640px) {
+    .watermark { color: rgba(200,23,42,0.10); }
+    .bio-stat-lbl { color: #a0a0a8; }
+    .event-location { color: #a0a0a8; }
+    .event-with { color: #787878; }
+    .section-intro { color: #a0a0a8; }
+    .genre-cat { color: #c8172a; opacity: 1; }
+    :root {
+      --subtext: #9a9aa4;
+      --dim: #606068;
+    }
+  }
+
 
   .reveal {
     opacity: 0;
@@ -1078,7 +1109,7 @@
     <li><a href="#demo">Demo</a></li>
     <li><a href="#studio">Studio</a></li>
     <li><a href="#pricing">Pricing</a></li>
-    <li><a href="https://linktr.ee/JettJensen" target="_blank" rel="noopener">Socials</a></li>
+    <li><a href="#socials">Socials</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-studio">Get in touch &rarr;</a>
@@ -1098,7 +1129,7 @@
   <a href="#demo"     onclick="closeMenu()">Demo</a>
   <a href="#studio"   onclick="closeMenu()">Studio</a>
   <a href="#pricing"  onclick="closeMenu()">Pricing</a>
-  <a href="https://linktr.ee/JettJensen" target="_blank" rel="noopener" onclick="closeMenu()">Socials</a>
+  <a href="#socials" onclick="closeMenu()">Socials</a>
   <a href="#contact"  onclick="closeMenu()">Contact</a>
 </div>
 
@@ -1125,12 +1156,16 @@
       </div>
       <div class="bio-stats">
         <div class="bio-stat">
-          <div class="bio-stat-val">Romance</div>
-          <div class="bio-stat-lbl">Primary genre</div>
+          <div class="bio-stat-val">5</div>
+          <div class="bio-stat-lbl">Current projects</div>
         </div>
         <div class="bio-stat">
-          <div class="bio-stat-val">Available</div>
-          <div class="bio-stat-lbl">For projects</div>
+          <div class="bio-stat-val">4</div>
+          <div class="bio-stat-lbl">Sent for production</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat-val">2</div>
+          <div class="bio-stat-lbl">Available for listening</div>
         </div>
       </div>
     </div>
@@ -1198,7 +1233,7 @@
         <div class="project-meta">J.P. Smith</div>
       </div>
       <div class="project-item">
-        <div class="project-title">All Hallow's Eve</div>
+        <div class="project-title">All Hallows Escape</div>
         <div class="project-meta">Kenna Belrae</div>
       </div>
     </div>
@@ -1232,7 +1267,7 @@
 
   <div class="events-list reveal">
     <div class="event-item">
-      <div class="event-date">Oct 24, 2026</div>
+      <div class="event-date">Oct 24, 2026<span class="event-badge">This Weekend</span></div>
       <div class="event-body">
         <div class="event-name">Bloodmoon Masquerade</div>
         <div class="event-location">Pinehurst, TX</div>
@@ -1286,32 +1321,32 @@
 
   <div class="genre-grid reveal">
     <div class="genre-card">
-      <div class="genre-cat">Romance</div>
+      <div class="genre-cat">General</div>
       <div class="genre-name">Romance</div>
       <div class="genre-desc">Contemporary, small town, second chance, forced proximity &mdash; the full range of romantic fiction.</div>
     </div>
     <div class="genre-card">
-      <div class="genre-cat">Dark Romance</div>
+      <div class="genre-cat">General</div>
       <div class="genre-name">Dark Romance</div>
       <div class="genre-desc">Morally gray characters, complex dynamics, stories that push boundaries and demand emotional commitment.</div>
     </div>
     <div class="genre-card">
-      <div class="genre-cat">Fantasy Romance</div>
+      <div class="genre-cat">General</div>
       <div class="genre-name">Fantasy Romance</div>
       <div class="genre-desc">World-building with heart. Fae, magic, found family, and the kind of slow burn that spans kingdoms.</div>
     </div>
     <div class="genre-card">
-      <div class="genre-cat">Paranormal Romance</div>
+      <div class="genre-cat">General</div>
       <div class="genre-name">Paranormal Romance</div>
       <div class="genre-desc">Vampires, shifters, monsters &mdash; romance with teeth and claws and chaos.</div>
     </div>
     <div class="genre-card">
-      <div class="genre-cat">Romantic Comedy</div>
+      <div class="genre-cat">General</div>
       <div class="genre-name">Romantic Comedy</div>
       <div class="genre-desc">Snark, banter, and the kind of chemistry that makes readers laugh out loud on public transport.</div>
     </div>
     <div class="genre-card">
-      <div class="genre-cat">Open to Discussion</div>
+      <div class="genre-cat">General</div>
       <div class="genre-name">Other Genres</div>
       <div class="genre-desc">Open to discussion. If the project is compelling, let's talk about it.</div>
     </div>
@@ -1325,7 +1360,6 @@
   <div class="reveal">
     <div class="section-label">Voice demos</div>
     <div class="section-title">Hear the <span>Range</span></div>
-    <p class="section-intro">Demo reels are in production. Check back soon &mdash; or reach out directly if you want to discuss a project in the meantime.</p>
   </div>
 
   <div class="demo-grid reveal">
