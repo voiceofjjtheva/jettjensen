@@ -657,6 +657,19 @@
     box-shadow: 0 0 28px rgba(0,0,0,0.4), inset 0 1px 0 rgba(200,23,42,0.08);
   }
 
+  .event-item.event-past {
+    opacity: 0.5;
+    filter: grayscale(0.4);
+  }
+
+  .event-item.event-past .event-note {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--subtext);
+    margin-top: 6px;
+  }
+
   .event-date {
     font-family: var(--bebas);
     font-size: 15px;
@@ -1266,12 +1279,13 @@
   </div>
 
   <div class="events-list reveal">
-    <div class="event-item">
-      <div class="event-date">Oct 24, 2026<span class="event-badge">This Weekend</span></div>
+    <div class="event-item event-past">
+      <div class="event-date">Oct 24, 2026</div>
       <div class="event-body">
         <div class="event-name">Bloodmoon Masquerade</div>
         <div class="event-location">Pinehurst, TX</div>
         <div class="event-with">with Cooper James</div>
+        <div class="event-note">Had a great time &mdash; loved meeting everyone out there.</div>
       </div>
     </div>
     <div class="event-item">
@@ -1296,6 +1310,20 @@
         <div class="event-name">Inks &amp; Echoes</div>
         <div class="event-location">Eustis, FL</div>
         <div class="event-with">Featured VA / Narrator</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date">Jul 22&ndash;24, 2027</div>
+      <div class="event-body">
+        <div class="event-name">Rebels &amp; Realms</div>
+        <div class="event-location">Rogers, AR</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-date">Oct 16, 2027</div>
+      <div class="event-body">
+        <div class="event-name">Books on the Bend</div>
+        <div class="event-location">Belton, TX</div>
       </div>
     </div>
     <div class="event-item">
